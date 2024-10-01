@@ -23,8 +23,8 @@ class StoreContactRequest extends FormRequest
     {
         return [
             "name" => "required|max:255",
-            "email" => "required|email",
-            "phone" => "required|max:12",
+            "email" => "email",
+            "phone" => "max:12",
         ];
     }
 }

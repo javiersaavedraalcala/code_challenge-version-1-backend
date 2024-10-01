@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('contacts', function (Blueprint $table) {
             $table->id();
             $table->string("name");
-            $table->string("email");
-            $table->string("phone", 12);
+            $table->string("email")->nullable();
+            $table->string("phone", 12)->nullable();;
             $table->unsignedBigInteger("user_id");
             $table->foreign("user_id")->references("id")->on("users");
             $table->timestamps();
