@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +15,8 @@ use App\Http\Controllers\ContactController;
 |
 */
 
-Route::apiResource("contacts", ContactController::class);
+Route::post("login", [AuthController::class, "login"]);
+Route::post("register", [AuthController::class, "register"]);
+
+
+Route::apiResource("contacts", ContactController::class)->middleware(["auth:sanctum"]);

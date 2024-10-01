@@ -8,6 +8,7 @@ use App\Interfaces\ContactInterfaceRepository;
 use App\Classes\ApiResponse;
 use App\Http\Resources\ContactResource;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class ContactController extends Controller
 {
@@ -37,7 +38,7 @@ class ContactController extends Controller
             "name" => $request->name,
             "email" => $request->email,
             "phone" => $request->phone,
-            "user_id" => 1
+            "user_id" => Auth::id()
         ];
 
         DB::beginTransaction();
@@ -57,6 +58,8 @@ class ContactController extends Controller
     public function show($id)
     {
         $contact = $this->contactInterfaceRepository->getById($id);
+        //Policy
+        $this->authorize('view', $contact);
 
         return ApiResponse::sendResponse(new ContactResource($contact), "", 200);
     }
@@ -66,6 +69,10 @@ class ContactController extends Controller
      */
     public function update(UpdateContactRequest $request, $id)
     {
+        //Policy
+        $contact = $this->contactInterfaceRepository->getById($id);
+        $this->authorize('update', $contact);
+
         $details = array_filter([
             "name" => $request->name,
             "email" => $request->email,
@@ -93,6 +100,10 @@ class ContactController extends Controller
      */
     public function destroy($id)
     {
+        //Policy
+        $contact = $this->contactInterfaceRepository->getById($id);
+        $this->authorize('delete', $contact);
+
         $this->contactInterfaceRepository->delete($id);
 
         return ApiResponse::sendResponse("Contact deleted successfully", "", 200);
