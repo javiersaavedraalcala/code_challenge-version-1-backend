@@ -9,7 +9,7 @@ Este proyecto es la parte backend del proyecto frontend [FrontEnd](https://githu
    ````bash
    composer install
 3. Renombrar archivo .env-example por .env:
-   3.1 Se debe configurar la base de datos que se va a utilizar, para fines practicos se recomienda usar sqlite
+   1. Se debe configurar la base de datos que se va a utilizar, para fines practicos se recomienda usar sqlite
 4. Correr las migraciones con el siguiente comando:
    ````bash
    php artisan migrate
