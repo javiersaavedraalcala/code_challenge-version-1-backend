@@ -37,7 +37,7 @@ class AuthController extends Controller
 
         if (!Auth::attempt($validated)) {
             return response()->json([
-                'message' => 'Login informations invalid'
+                'message' => 'The credentials entered are incorrect. Please try again.'
             ], 401);
         }
 
@@ -46,6 +46,15 @@ class AuthController extends Controller
         return response()->json([
             'accessToken' => $user->createToken('apiToken')->plainTextToken,
             'tokenType' => 'Bearer'
+        ]);
+    }
+
+    public function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+
+        return response()->json([
+            "message" => "Successfully logged out."
         ]);
     }
 }
